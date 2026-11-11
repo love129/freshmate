@@ -1,0 +1,4 @@
+__pycache__/
+freshmate.db
+.env
+.vscode/
