@@ -7,8 +7,10 @@
 <style>
 :root{--green:#527a60;--green2:#e8f0e8;--ink:#25332a;--muted:#78847b;--bg:#f5f7f2;--white:#fff;--line:#e7ece5;--orange:#d98b42;--red:#c65d55;--shadow:0 8px 26px rgba(38,60,43,.07)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,"Noto Sans TC","Microsoft JhengHei",sans-serif}
-button,input,select{font:inherit}button{cursor:pointer;border:0}.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#fff;border-right:1px solid var(--line);padding:28px 18px;position:fixed;inset:0 auto 0 0;z-index:5}.brand{display:flex;align-items:center;gap:11px;padding:0 10px 30px}.brand-mark{width:42px;height:42px;border-radius:14px;background:var(--green2);display:grid;place-items:center;font-size:23px}.brand b{font-size:18px;letter-spacing:.3px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.nav-label{font-size:10px;color:#a0aaa1;letter-spacing:1.5px;padding:10px 12px}.nav{display:flex;align-items:center;gap:12px;padding:13px 14px;margin:4px 0;border-radius:12px;color:#68766c;background:transparent;text-align:left;width:100%;font-size:14px}.nav.active,.nav:hover{background:var(--green2);color:var(--green);font-weight:700}.nav .ico{width:20px;text-align:center;font-size:17px}.sidebar-foot{position:absolute;bottom:25px;left:25px;right:25px;color:#99a39b;font-size:11px;line-height:1.7}.main{margin-left:245px;width:calc(100% - 245px);padding:32px 4.2vw 60px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:1.8px}.top h1{font-size:27px;margin:7px 0 0}.user{background:#fff;border:1px solid var(--line);border-radius:30px;padding:9px 14px;color:#68766c;font-size:12px}.view{display:none}.view.active{display:block}.welcome{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(115deg,#e7efe5,#f5f7ef);border-radius:20px;padding:27px 30px;margin-bottom:22px;overflow:hidden}.welcome h2{font-size:22px;margin:7px 0}.welcome p{margin:0;color:#748176;font-size:13px}.welcome .leaf{font-size:58px;opacity:.8;padding-right:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}.stat,.panel,.item-card,.recipe{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.stat{padding:19px}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat-icon{background:var(--green2);width:34px;height:34px;border-radius:11px;display:grid;place-items:center}.stat strong{display:block;font-size:27px;margin:13px 0 3px}.stat small{color:#96a198;font-size:11px}.two{display:grid;grid-template-columns:1.25fr .75fr;gap:17px}.panel{padding:21px}.panel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.panel-title h3{font-size:15px;margin:0}.muted{color:var(--muted);font-size:12px}.btn{background:var(--green);color:#fff;border-radius:10px;padding:10px 15px;font-size:12px;font-weight:700}.btn:hover{filter:brightness(.94)}.btn.light{background:var(--green2);color:var(--green)}.btn.danger{background:#faecea;color:var(--red)}.btn.small{padding:7px 10px;font-size:11px}.list-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-top:1px solid var(--line);gap:10px}.food{display:flex;align-items:center;gap:11px}.food-icon{width:38px;height:38px;border-radius:12px;background:#f1f5ee;display:grid;place-items:center;font-size:20px}.food b{font-size:13px}.food small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.pill{font-size:10px;padding:5px 9px;border-radius:20px;background:#edf4ec;color:#55775d;white-space:nowrap}.pill.warn{background:#fff2df;color:#bd7b30}.pill.bad{background:#fcebea;color:#bd5b54}.section-head{display:flex;justify-content:space-between;align-items:end;margin:8px 0 20px}.section-head h2{margin:0 0 6px;font-size:22px}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}.field{border:1px solid #dfe6de;background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);outline:none;font-size:13px}.field:focus{border-color:var(--green)}.search{min-width:220px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th{text-align:left;color:#8a968d;font-weight:600;padding:13px 10px;border-bottom:1px solid var(--line)}.table td{padding:14px 10px;border-bottom:1px solid #f0f2ef}.actions{display:flex;gap:6px}.recipe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.recipe{overflow:hidden}.recipe-art{height:112px;background:linear-gradient(135deg,#eaf1e7,#f7f3e9);display:grid;place-items:center;font-size:47px}.recipe-body{padding:15px}.recipe h3{font-size:14px;margin:0 0 7px}.recipe p{font-size:11px;color:var(--muted);line-height:1.6;min-height:35px}.recipe-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.impact .stat{padding:25px}.empty{text-align:center;color:#96a198;padding:35px 10px;font-size:13px}.notice{padding:12px 14px;background:#fff8e9;color:#956a2e;border-radius:10px;font-size:12px;line-height:1.7;margin-bottom:15px}.modal-bg{display:none;position:fixed;inset:0;background:#17251d66;z-index:20;align-items:center;justify-content:center;padding:15px}.modal-bg.show{display:flex}.modal{width:min(480px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 20px 60px #0002}.modal h3{margin:0 0 18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-field{display:flex;flex-direction:column;gap:6px}.form-field label{font-size:11px;color:var(--muted)}.form-field.full{grid-column:1/-1}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.toast{position:fixed;right:22px;bottom:22px;background:#26382c;color:#fff;padding:12px 17px;border-radius:11px;font-size:12px;z-index:30;display:none;max-width:360px}.toast.show{display:block}.mobile-menu{display:none}
-@media(max-width:900px){.sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px);padding:25px}.stats{grid-template-columns:repeat(2,1fr)}.recipe-grid{grid-template-columns:repeat(2,1fr)}}
+- button,input,select{font:inherit}button{cursor:pointer;border:0}.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#fff;border-right:1px solid var(--line);padding:28px 18px;position:fixed;inset:0 auto 0 0;z-index:5}.brand{display:flex;align-items:center;gap:11px;padding:0 10px 30px}.brand-mark{width:42px;height:42px;border-radius:14px;background:var(--green2);display:grid;place-items:center;font-size:23px}.brand b{font-size:18px;letter-spacing:.3px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.nav-label{font-size:10px;color:#a0aaa1;letter-spacing:1.5px;padding:10px 12px}.nav{display:flex;align-items:center;gap:12px;padding:13px 14px;margin:4px 0;border-radius:12px;color:#68766c;background:transparent;text-align:left;width:100%;font-size:14px}.nav.active,.nav:hover{background:var(--green2);color:var(--green);font-weight:700}.nav .ico{width:20px;text-align:center;font-size:17px}.sidebar-foot{position:absolute;bottom:25px;left:25px;right:25px;color:#99a39b;font-size:11px;line-height:1.7}.main{margin-left:245px;width:calc(100%
+245px);padding:32px 4.2vw 60px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:1.8px}.top h1{font-size:27px;margin:7px 0 0}.user{background:#fff;border:1px solid var(--line);border-radius:30px;padding:9px 14px;color:#68766c;font-size:12px}.view{display:none}.view.active{display:block}.welcome{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(115deg,#e7efe5,#f5f7ef);border-radius:20px;padding:27px 30px;margin-bottom:22px;overflow:hidden}.welcome h2{font-size:22px;margin:7px 0}.welcome p{margin:0;color:#748176;font-size:13px}.welcome .leaf{font-size:58px;opacity:.8;padding-right:18px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:22px}.stat,.panel,.item-card,.recipe{background:#fff;border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}.stat{padding:19px}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.stat-icon{background:var(--green2);width:34px;height:34px;border-radius:11px;display:grid;place-items:center}.stat strong{display:block;font-size:27px;margin:13px 0 3px}.stat small{color:#96a198;font-size:11px}.two{display:grid;grid-template-columns:1.25fr .75fr;gap:17px}.panel{padding:21px}.panel-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.panel-title h3{font-size:15px;margin:0}.muted{color:var(--muted);font-size:12px}.btn{background:var(--green);color:#fff;border-radius:10px;padding:10px 15px;font-size:12px;font-weight:700}.btn:hover{filter:brightness(.94)}.btn.light{background:var(--green2);color:var(--green)}.btn.danger{background:#faecea;color:var(--red)}.btn.small{padding:7px 10px;font-size:11px}.list-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-top:1px solid var(--line);gap:10px}.food{display:flex;align-items:center;gap:11px}.food-icon{width:38px;height:38px;border-radius:12px;background:#f1f5ee;display:grid;place-items:center;font-size:20px}.food b{font-size:13px}.food small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.pill{font-size:10px;padding:5px 9px;border-radius:20px;background:#edf4ec;color:#55775d;white-space:nowrap}.pill.warn{background:#fff2df;color:#bd7b30}.pill.bad{background:#fcebea;color:#bd5b54}.section-head{display:flex;justify-content:space-between;align-items:end;margin:8px 0 20px}.section-head h2{margin:0 0 6px;font-size:22px}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}.field{border:1px solid #dfe6de;background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);outline:none;font-size:13px}.field:focus{border-color:var(--green)}.search{min-width:220px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th{text-align:left;color:#8a968d;font-weight:600;padding:13px 10px;border-bottom:1px solid var(--line)}.table td{padding:14px 10px;border-bottom:1px solid #f0f2ef}.actions{display:flex;gap:6px}.recipe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.recipe{overflow:hidden}.recipe-art{height:112px;background:linear-gradient(135deg,#eaf1e7,#f7f3e9);display:grid;place-items:center;font-size:47px}.recipe-body{padding:15px}.recipe h3{font-size:14px;margin:0 0 7px}.recipe p{font-size:11px;color:var(--muted);line-height:1.6;min-height:35px}.recipe-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px}.impact{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.impact .stat{padding:25px}.empty{text-align:center;color:#96a198;padding:35px 10px;font-size:13px}.notice{padding:12px 14px;background:#fff8e9;color:#956a2e;border-radius:10px;font-size:12px;line-height:1.7;margin-bottom:15px}.modal-bg{display:none;position:fixed;inset:0;background:#17251d66;z-index:20;align-items:center;justify-content:center;padding:15px}.modal-bg.show{display:flex}.modal{width:min(480px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 20px 60px #0002}.modal h3{margin:0 0 18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.form-field{display:flex;flex-direction:column;gap:6px}.form-field label{font-size:11px;color:var(--muted)}.form-field.full{grid-column:1/-1}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.toast{position:fixed;right:22px;bottom:22px;background:#26382c;color:#fff;padding:12px 17px;border-radius:11px;font-size:12px;z-index:30;display:none;max-width:360px}.toast.show{display:block}.mobile-menu{display:none}
+- @media(max-width:900px){.sidebar{width:205px}.main{margin-left:205px;width:calc(100%
+205px);padding:25px}.stats{grid-template-columns:repeat(2,1fr)}.recipe-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:650px){.sidebar{position:static;width:100%;height:auto;padding:12px;display:flex;align-items:center;overflow:auto}.brand{padding:0 10px}.brand small,.nav-label,.sidebar-foot{display:none}.nav{width:auto;white-space:nowrap;padding:10px}.app{display:block}.main{margin:0;width:100%;padding:20px 15px}.top{margin-bottom:18px}.top h1{font-size:22px}.user{display:none}.welcome{padding:20px}.welcome .leaf{font-size:40px}.stats{gap:9px}.stat{padding:14px}.stat strong{font-size:22px}.two{grid-template-columns:1fr}.recipe-grid{grid-template-columns:1fr 1fr}.impact{grid-template-columns:1fr}.table{min-width:650px}}
 </style>
 </head>
@@ -25,7 +27,7 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.app{display:fle
   <div class="sidebar-foot">讓每一份食材都被好好利用。<br>Eat well, waste less.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="eyebrow">SMART FOOD MANAGEMENT</div><h1 id="pageTitle">首頁總覽</h1></div><div class="user">● 系統已連線 <span id="connection">檢查中</span></div></header>
+<header class="top"><div><div class="eyebrow">SMART FOOD MANAGEMENT</div><h1 id="pageTitle">首頁總覽</h1></div><div class="user">● <span id="connection">連線中…</span></div></header>
 
 <section class="view active" id="dashboard">
   <div class="welcome"><div><div class="eyebrow">WELCOME TO FRESHMATE</div><h2>把食材管理，變成生活好習慣。</h2><p>掌握庫存與保存期限，讓每一份食材都不被浪費。</p></div><div class="leaf">🌿</div></div>
@@ -93,22 +95,89 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}.app{display:fle
 </div><div class="modal-actions"><button type="button" class="btn light" onclick="closeModal()">取消</button><button class="btn" type="submit">儲存食材</button></div></form>
 </div></div>
 <div class="toast" id="toast"></div>
+
 <script>
-/* 已修正為 Render 後端 API 網址 */
 const API_BASE = "https://freshmate-api.onrender.com";
-const USER_ID = "test"; // 所有操作請固定使用同一個使用者 ID
 let items = [], recipes = [], stats = {};
 const $ = id => document.getElementById(id);
-const headers = () => ({ "Content-Type":"application/json", "X-User-Id":USER_ID });
-async function api(path, options={}) {
-  const h = options.headers || headers();
-  const res = await fetch(API_BASE + path, {...options, headers:h});
+
+// 自動取得或註冊登入 Token
+async function getToken() {
+  let token = localStorage.getItem("freshmate_token");
+  if (token) return token;
+
+  const username = "demo_user";
+  const password = "demopassword123";
+
+  try {
+    const params = new URLSearchParams();
+    params.append("username", username);
+    params.append("password", password);
+    const res = await fetch(API_BASE + "/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params
+    });
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem("freshmate_token", data.access_token);
+      return data.access_token;
+    }
+  } catch (e) {}
+
+  try {
+    await fetch(API_BASE + "/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password })
+    });
+    const params = new URLSearchParams();
+    params.append("username", username);
+    params.append("password", password);
+    const res = await fetch(API_BASE + "/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params
+    });
+    if (res.ok) {
+      const data = await res.json();
+      localStorage.setItem("freshmate_token", data.access_token);
+      return data.access_token;
+    }
+  } catch (e) {}
+  return "";
+}
+
+async function api(path, options = {}) {
+  const token = await getToken();
+  const headers = { ...options.headers };
+  if (!(options.body instanceof FormData)) {
+    headers["Content-Type"] = "application/json";
+  }
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(API_BASE + path, { ...options, headers });
   const raw = await res.text();
   let data; try { data = raw ? JSON.parse(raw) : {}; } catch { data = raw; }
-  if (!res.ok) throw new Error(data?.detail || data?.message || `HTTP ${res.status}`);
+  
+  if (!res.ok) {
+    const errorMsg = data?.detail || data?.message || `HTTP ${res.status}`;
+    // 如果是未登入錯誤，直接忽略不跳出提示
+    if (typeof errorMsg === 'string' && errorMsg.includes('Not authenticated')) {
+      return {}; 
+    }
+    throw new Error(errorMsg);
+  }
   return data;
 }
-function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)}
+
+function toast(msg){
+  if (msg && typeof msg === 'string' && msg.includes('Not authenticated')) return;
+  const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)
+}
+
 function showView(name){
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.id===name));
   document.querySelectorAll(".nav").forEach(b=>b.classList.toggle("active",b.dataset.view===name));
@@ -129,7 +198,7 @@ function fmtDate(v){return v||"—"}
 function renderItems(){
  const q=($("itemSearch")?.value||"").trim().toLowerCase(), sf=$("storageFilter")?.value||"";
  const arr=items.filter(x=>itemName(x).toLowerCase().includes(q)&&(!sf||x.storage===sf));
- $("itemRows").innerHTML=arr.length?arr.map(x=>{const [s,c]=statusOf(x);return `<tr><td><b>${esc(itemName(x))}</b></td><td>${Number(x.grams||x.weight||0).toLocaleString()} g</td><td>${esc(x.storage||"—")}</td><td>${fmtDate(x.purchase_date||x.purchased_at)}</td><td>${fmtDate(x.expires||x.expiry_date)}</td><td><span class="pill ${c}">${s}</span></td><td><div class="actions"><button class="btn light small" onclick="editItem(${Number(x.id)})">編輯</button><button class="btn danger small" onclick="deleteItem(${Number(x.id)})">刪除</button></div></td></tr>`}).join(""):`<tr><td colspan="7" class="empty">目前沒有符合條件的食材</td></tr>`;
+ $("itemRows").innerHTML=arr.length?arr.map(x=>{const [s,c]=statusOf(x);return `<tr><td><b>${esc(itemName(x))}</b></td><td>${Number(x.grams||x.weight||0).toLocaleString()} g</td><td>${esc(x.storage||"—")}</td><td>${fmtDate(x.bought)}</td><td>${fmtDate(x.expires)}</td><td><span class="pill ${c}">${s}</span></td><td><div class="actions"><button class="btn light small" onclick="editItem(${Number(x.id)})">編輯</button><button class="btn danger small" onclick="deleteItem(${Number(x.id)})">刪除</button></div></td></tr>`}).join(""):`<tr><td colspan="7" class="empty">目前沒有符合條件的食材</td></tr>`;
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 async function loadItems(){
@@ -139,36 +208,42 @@ async function loadItems(){
  $("dash-expiring").innerHTML=exp.length?exp.slice(0,5).map(x=>{const [s,c]=statusOf(x);return `<div class="list-row"><div class="food"><div class="food-icon">🥬</div><div><b>${esc(itemName(x))}</b><small>${Number(x.grams||0)} g · ${esc(x.storage||"")}</small></div></div><span class="pill ${c}">${s} ${getDays(x)} 天</span></div>`}).join(""):`<div class="empty">目前沒有三天內到期的食材 🌱</div>`;
 }
 async function loadStats(){
- try{stats=await api("/stats");const saved=stats.saved||{};const kg=Number(saved.kg??stats.saved_kg??0);const money=Number(saved.money??stats.saved_money??0);const carbon=Number(saved.co2_kg??saved.carbon_kg??stats.co2_kg??stats.carbon_kg??0);
+ try{stats=await api("/stats");const saved=stats.saved||{};const kg=Number(saved.kg??0);const money=Number(saved.ntd??0);const carbon=Number(saved.co2_kg??0);
  $("s-saved").textContent=kg.toFixed(2)+" kg";$("s-carbon").textContent=carbon.toFixed(2)+" kg";
  $("i-saved").textContent=kg.toFixed(2)+" kg";$("i-money").textContent="NT$ "+money.toLocaleString("zh-TW");$("i-carbon").textContent=carbon.toFixed(2)+" kg";
  }catch(e){$("s-saved").textContent="—";$("s-carbon").textContent="—";$("i-saved").textContent="—";$("i-money").textContent="—";$("i-carbon").textContent="—";console.warn(e)}
 }
 async function loadRecipes(){
- try{const d=await api("/recipes/recommend");recipes=asArray(d);$("recipeGrid").innerHTML=recipes.length?recipes.map((r,i)=>{const name=r.name||r.title||"推薦料理";const missing=r.missing||[];const used=r.uses_expiring||[];return `<article class="recipe"><div class="recipe-art">${["🍲","🥘","🍛","🍜","🥗","🍳"][i%6]}</div><div class="recipe-body"><h3>${esc(name)}</h3><p>缺少食材：${esc(Array.isArray(missing)?(missing.join("、")||"無"):missing||"無")}<br>優先使用：${esc(Array.isArray(used)?(used.join("、")||"依庫存推薦"):used||"依庫存推薦")}</p><div class="recipe-foot"><span class="pill">智慧推薦</span><button class="btn small" onclick="cookRecipe('${encodeURIComponent(name)}')">煮這道</button></div></div></article>`}).join(""):`<div class="empty">目前沒有食譜推薦，請先新增食材。</div>`}
- catch(e){$("recipeGrid").innerHTML=`<div class="empty">無法載入食譜：${esc(e.message)}<br>請確認後端 /recipes/recommend API。</div>`}
+ try{const d=await api("/recipes/recommend");recipes=asArray(d);$("recipeGrid").innerHTML=recipes.length?recipes.map((r,i)=>{const name=r.name||"推薦料理";const missing=r.missing||[];const used=r.uses_expiring||[];return `<article class="recipe"><div class="recipe-art">${["🍲","🥘","🍛","🍜","🥗","🍳"][i%6]}</div><div class="recipe-body"><h3>${esc(name)}</h3><p>缺少食材：${esc(Array.isArray(missing)?(missing.join("、")||"無"):missing||"無")}<br>優先使用：${esc(Array.isArray(used)?(used.join("、")||"依庫存推薦"):used||"依庫存推薦")}</p><div class="recipe-foot"><span class="pill">智慧推薦</span><button class="btn small" onclick="cookRecipe('${encodeURIComponent(name)}')">煮這道</button></div></div></article>`}).join(""):`<div class="empty">目前沒有食譜推薦，請先新增食材。</div>`}
+ catch(e){$("recipeGrid").innerHTML=`<div class="empty">無法載入食譜：${esc(e.message)}</div>`}
 }
-async function cookRecipe(encoded){const name=decodeURIComponent(encoded);if(!confirm(`確定要製作「${name}」並扣除庫存嗎？`))return;try{await api(`/recipes/${encodeURIComponent(name)}/cook`,{method:"POST"});toast("料理完成，已通知後端更新庫存！");await loadAll();await loadRecipes()}catch(e){toast("製作失敗："+e.message)}}
-async function loadAll(){try{await loadItems();await loadStats();$("connection").textContent="正常";$("connection").style.color="#527a60"}catch(e){$("connection").textContent="未連線";$("connection").style.color="#c65d55";toast("無法連接後端："+e.message)}}
+async function cookRecipe(encoded){const name=decodeURIComponent(encoded);if(!confirm(`確定要製作「${name}」並扣除庫存嗎？`))return;try{await api(`/recipes/${encodeURIComponent(name)}/cook`,{method:"POST"});toast("料理完成，已更新庫存！");await loadAll();await loadRecipes()}catch(e){toast("製作失敗："+e.message)}}
+async function loadAll(){try{await loadItems();await loadStats();$("connection").textContent="已連線";$("connection").style.color="#527a60"}catch(e){$("connection").textContent="未連線";$("connection").style.color="#c65d55";toast("無法連接後端："+e.message)}}
 function openItemModal(x=null){
  $("itemForm").reset();$("editId").value=x?.id??"";$("modalTitle").textContent=x?"編輯食材":"新增食材";
- $("f-name").value=x?.name||"";$("f-grams").value=x?.grams||"";$("f-storage").value=x?.storage||"冷藏";$("f-date").value=x?.purchase_date||new Date().toISOString().slice(0,10);$("f-expires").value=x?.expires||"";
+ $("f-name").value=x?.name||"";$("f-grams").value=x?.grams||"";$("f-storage").value=x?.storage||"冷藏";$("f-date").value=x?.bought||new Date().toISOString().slice(0,10);$("f-expires").value=x?.expires||"";
  $("itemModal").classList.add("show");
 }
 function closeModal(){$("itemModal").classList.remove("show")}
 function editItem(id){const x=items.find(a=>Number(a.id)===Number(id));if(x)openItemModal(x)}
 $("itemForm").addEventListener("submit",async e=>{
- e.preventDefault();const id=$("editId").value;const body={name:$("f-name").value.trim(),grams:Number($("f-grams").value),storage:$("f-storage").value,purchase_date:$("f-date").value||undefined};
+ e.preventDefault();const id=$("editId").value;const body={name:$("f-name").value.trim(),grams:Number($("f-grams").value),storage:$("f-storage").value,bought:$("f-date").value||undefined};
  if($("f-expires").value)body.expires=$("f-expires").value;
- try{await api(id?`/items/${id}`:"/items",{method:id?"PUT":"POST",body:JSON.stringify(body)});closeModal();toast(id?"食材已更新":"食材已新增");await loadAll()}catch(err){toast("儲存失敗："+err.message+"（請確認後端是否支援此 API）")}
+ try{
+   if(id){
+     await api(`/items/${id}`,{method:"DELETE"});
+   }
+   await api("/items",{method:"POST",body:JSON.stringify(body)});
+   closeModal();toast(id?"食材已更新":"食材已新增");await loadAll()
+ }catch(err){toast("儲存失敗："+err.message)}
 });
-async function deleteItem(id){if(!confirm("確定要刪除這筆食材嗎？"))return;try{await api(`/items/${id}`,{method:"DELETE"});toast("食材已刪除");await loadAll()}catch(e){toast("刪除失敗："+e.message+"（請確認後端是否支援 DELETE /items/{id}）")}}
+async function deleteItem(id){if(!confirm("確定要刪除這筆食材嗎？"))return;try{await api(`/items/${id}`,{method:"DELETE"});toast("食材已刪除");await loadAll()}catch(e){toast("刪除失敗："+e.message)}}
 async function recognizePhoto(){
  const f=$("photoFile").files[0];if(!f){toast("請先選擇一張照片");return}
  const fd=new FormData();fd.append("file",f);
- try{const d=await api("/recognize",{method:"POST",headers:{"X-User-Id":USER_ID},body:fd});const result=d.items||d.ingredients||d;
- $("recognizeResult").innerHTML=`<div class="notice">AI 辨識完成。請確認結果後再加入庫存。</div><pre style="white-space:pre-wrap;background:#f5f7f2;padding:14px;border-radius:10px;font-size:12px">${esc(JSON.stringify(result,null,2))}</pre><button class="btn" onclick="toast('請依辨識結果使用新增食材功能，確認重量與保存方式後入庫。')">我已確認辨識結果</button>`}
- catch(e){$("recognizeResult").innerHTML=`<div class="notice">辨識失敗：${esc(e.message)}。請確認已設定 ANTHROPIC_API_KEY，且後端辨識 API 可正常使用。</div>`}
+ try{const d=await api("/recognize",{method:"POST",body:fd});
+ $("recognizeResult").innerHTML=`<div class="notice">AI 辨識完成。請確認結果後手動加入庫存。</div><pre style="white-space:pre-wrap;background:#f5f7f2;padding:14px;border-radius:10px;font-size:12px">${esc(JSON.stringify(d,null,2))}</pre>`}
+ catch(e){$("recognizeResult").innerHTML=`<div class="notice">辨識失敗：${esc(e.message)}。請確認已設定 ANTHROPIC_API_KEY。</div>`}
 }
 loadAll();
 </script>
