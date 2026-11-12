@@ -21,7 +21,7 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}
 .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
 .eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:1.8px}
 .top h1{font-size:27px;margin:7px 0 0}
-.user{background:#fff;border:1px solid var(--line);border-radius:30px;padding:9px 14px;color:#68766c;font-size:12px}
+.user-info{background:#fff;border:1px solid var(--line);border-radius:30px;padding:9px 14px;color:#68766c;font-size:12px;display:flex;align-items:center;gap:8px}
 .view{display:none}.view.active{display:block}
 .welcome{display:flex;justify-content:space-between;align-items:center;background:linear-gradient(115deg,#e7efe5,#f5f7ef);border-radius:20px;padding:27px 30px;margin-bottom:22px;overflow:hidden}
 .welcome h2{font-size:22px;margin:7px 0}.welcome p{margin:0;color:#748176;font-size:13px}.welcome .leaf{font-size:58px;opacity:.8;padding-right:18px}
@@ -43,7 +43,7 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}
 .pill.warn{background:#fff2df;color:#bd7b30}.pill.bad{background:#fcebea;color:#bd5b54}
 .section-head{display:flex;justify-content:space-between;align-items:end;margin:8px 0 20px}.section-head h2{margin:0 0 6px;font-size:22px}
 .toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:16px}
-.field{border:1px solid #dfe6de;background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);outline:none;font-size:13px}
+.field{border:1px solid #dfe6de;background:#fff;border-radius:10px;padding:10px 12px;color:var(--ink);outline:none;font-size:13px;width:100%}
 .field:focus{border-color:var(--green)}.search{min-width:220px}
 .table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}
 .table th{text-align:left;color:#8a968d;font-weight:600;padding:13px 10px;border-bottom:1px solid var(--line)}
@@ -56,6 +56,17 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}
 .impact{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.impact .stat{padding:25px}
 .empty{text-align:center;color:#96a198;padding:35px 10px;font-size:13px}
 .notice{padding:12px 14px;background:#fff8e9;color:#956a2e;border-radius:10px;font-size:12px;line-height:1.7;margin-bottom:15px}
+
+/* 登入/註冊彈窗樣式 */
+.auth-overlay{display:none;position:fixed;inset:0;background:rgba(23,37,29,0.7);z-index:100;align-items:center;justify-content:center;padding:15px}
+.auth-overlay.show{display:flex}
+.auth-box{width:min(440px,100%);background:#fff;border-radius:24px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center}
+.auth-tabs{display:flex;background:var(--green2);border-radius:12px;padding:4px;margin-bottom:24px}
+.auth-tab{flex:1;padding:10px;font-size:13px;font-weight:700;border-radius:10px;background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
+.auth-tab.active{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.auth-form{display:flex;flex-direction:column;gap:16px;text-align:left}
+.auth-form label{font-size:12px;color:var(--muted);display:block;margin-bottom:6px}
+
 .modal-bg{display:none;position:fixed;inset:0;background:#17251d66;z-index:20;align-items:center;justify-content:center;padding:15px}
 .modal-bg.show{display:flex}
 .modal{width:min(480px,100%);background:#fff;border-radius:18px;padding:24px;box-shadow:0 20px 60px #0002}
@@ -66,12 +77,37 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}
 .form-field.full{grid-column:1/-1}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
 .toast{position:fixed;right:22px;bottom:22px;background:#26382c;color:#fff;padding:12px 17px;border-radius:11px;font-size:12px;z-index:30;display:none;max-width:360px}
-.toast.show{display:block}.mobile-menu{display:none}
-@media(max-width:900px){.sidebar{width:205px}.main{margin-left:205px;width:calc(100% - 205px);padding:25px}.stats{grid-template-columns:repeat(2,1fr)}.recipe-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:650px){.sidebar{position:static;width:100%;height:auto;padding:12px;display:flex;align-items:center;overflow:auto}.brand{padding:0 10px}.brand small,.nav-label,.sidebar-foot{display:none}.nav{width:auto;white-space:nowrap;padding:10px}.app{display:block}.main{margin:0;width:100%;padding:20px 15px}.top{margin-bottom:18px}.top h1{font-size:22px}.user{display:none}.welcome{padding:20px}.welcome .leaf{font-size:40px}.stats{gap:9px}.stat{padding:14px}.stat strong{font-size:22px}.two{grid-template-columns:1fr}.recipe-grid{grid-template-columns:1fr 1fr}.impact{grid-template-columns:1fr}.table{min-width:650px}}
+.toast.show{display:block}
 </style>
 </head>
 <body>
+
+<!-- 登入 / 註冊彈窗 -->
+<div class="auth-overlay" id="authOverlay">
+  <div class="auth-box">
+    <div style="font-size:42px;margin-bottom:8px">🥬</div>
+    <h2 style="margin:0 0 6px;font-size:20px">食刻管家 FreshMate</h2>
+    <p class="muted" style="font-size:12px;margin-bottom:20px">請登入您的帳號以開始管理智慧冰箱</p>
+    
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLoginBtn" onclick="switchAuthMode('login')">登入帳號</button>
+      <button class="auth-tab" id="tabRegisterBtn" onclick="switchAuthMode('register')">註冊新帳號</button>
+    </div>
+
+    <form class="auth-form" id="authForm">
+      <div>
+        <label>使用者名稱</label>
+        <input class="field" id="authUsername" required placeholder="請輸入使用者名稱">
+      </div>
+      <div>
+        <label>密碼</label>
+        <input class="field" id="authPassword" type="password" required placeholder="請輸入密碼">
+      </div>
+      <button class="btn" type="submit" id="authSubmitBtn" style="margin-top:8px;padding:12px">立即登入</button>
+    </form>
+  </div>
+</div>
+
 <div class="app">
 <aside class="sidebar">
   <div class="brand"><div class="brand-mark">🥬</div><div><b>FreshMate</b><small>食刻管家・智慧食材管理</small></div></div>
@@ -81,10 +117,14 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}
   <button class="nav" data-view="recognize"><span class="ico">▧</span>AI 食材辨識</button>
   <button class="nav" data-view="recipes"><span class="ico">♨</span>智慧食譜</button>
   <button class="nav" data-view="impact"><span class="ico">♧</span>減碳成果</button>
-  <div class="sidebar-foot">讓每一份食材都被好好利用。<br>Eat well, waste less.</div>
+  <div style="position:absolute;bottom:25px;left:25px;right:25px;">
+    <div id="userDisplay" style="font-size:12px;color:var(--muted);margin-bottom:8px">帳號：—</div>
+    <button class="btn danger small" style="width:100%" onclick="logout()">登出帳號</button>
+    <div style="font-size:11px;color:#99a39b;margin-top:12px;line-height:1.6">讓每一份食材都被好好利用。<br>Eat well, waste less.</div>
+  </div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="eyebrow">SMART FOOD MANAGEMENT</div><h1 id="pageTitle">首頁總覽</h1></div><div class="user">● <span id="connection">連線中…</span></div></header>
+<header class="top"><div><div class="eyebrow">SMART FOOD MANAGEMENT</div><h1 id="pageTitle">首頁總覽</h1></div><div class="user-info">● <span id="connection">連線中…</span></div></header>
 
 <section class="view active" id="dashboard">
   <div class="welcome"><div><div class="eyebrow">WELCOME TO FRESHMATE</div><h2>把食材管理，變成生活好習慣。</h2><p>掌握庫存與保存期限，讓每一份食材都不被浪費。</p></div><div class="leaf">🌿</div></div>
@@ -156,56 +196,79 @@ button,input,select{font:inherit}button{cursor:pointer;border:0}
 <script>
 const API_BASE = "https://freshmate-api.onrender.com";
 let items = [], recipes = [], stats = {};
+let authMode = "login";
 const $ = id => document.getElementById(id);
 
-async function getToken() {
-  let token = localStorage.getItem("freshmate_token");
-  if (token) return token;
+function checkAuth(){
+  const token = localStorage.getItem("freshmate_token");
+  const username = localStorage.getItem("freshmate_user");
+  if(!token){
+    $("authOverlay").classList.add("show");
+  } else {
+    $("authOverlay").classList.remove("show");
+    if(username) $("userDisplay").textContent = "帳號：" + username;
+    loadAll();
+  }
+}
 
-  const username = "demo_user";
-  const password = "demopassword123";
+function switchAuthMode(mode){
+  authMode = mode;
+  if(mode === "login"){
+    $("tabLoginBtn").classList.add("active");
+    $("tabRegisterBtn").classList.remove("active");
+    $("authSubmitBtn").textContent = "立即登入";
+  } else {
+    $("tabRegisterBtn").classList.add("active");
+    $("tabLoginBtn").classList.remove("active");
+    $("authSubmitBtn").textContent = "註冊並登入";
+  }
+}
+
+$("authForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const username = $("authUsername").value.trim();
+  const password = $("authPassword").value.trim();
 
   try {
+    if(authMode === "register"){
+      const regRes = await fetch(API_BASE + "/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+      const regData = await regRes.json();
+      if(!regRes.ok) throw new Error(regData.detail || "註冊失敗");
+    }
+
     const params = new URLSearchParams();
     params.append("username", username);
     params.append("password", password);
-    const res = await fetch(API_BASE + "/auth/login", {
+    const loginRes = await fetch(API_BASE + "/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: params
     });
-    if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("freshmate_token", data.access_token);
-      return data.access_token;
-    }
-  } catch (e) {}
+    const loginData = await loginRes.json();
+    if(!loginRes.ok) throw new Error(loginData.detail || "登入失敗");
 
-  try {
-    await fetch(API_BASE + "/auth/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
-    const params = new URLSearchParams();
-    params.append("username", username);
-    params.append("password", password);
-    const res = await fetch(API_BASE + "/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: params
-    });
-    if (res.ok) {
-      const data = await res.json();
-      localStorage.setItem("freshmate_token", data.access_token);
-      return data.access_token;
-    }
-  } catch (e) {}
-  return "";
+    localStorage.setItem("freshmate_token", loginData.access_token);
+    localStorage.setItem("freshmate_user", username);
+    $("authOverlay").classList.remove("show");
+    toast(authMode === "register" ? "註冊並登入成功！" : "登入成功！");
+    checkAuth();
+  } catch(err){
+    toast("操作失敗：" + err.message);
+  }
+});
+
+function logout(){
+  localStorage.removeItem("freshmate_token");
+  localStorage.removeItem("freshmate_user");
+  window.location.reload();
 }
 
 async function api(path, options = {}) {
-  const token = await getToken();
+  const token = localStorage.getItem("freshmate_token");
   const headers = { ...options.headers };
   if (!(options.body instanceof FormData)) {
     headers["Content-Type"] = "application/json";
@@ -219,17 +282,19 @@ async function api(path, options = {}) {
   let data; try { data = raw ? JSON.parse(raw) : {}; } catch { data = raw; }
   
   if (!res.ok) {
-    const errorMsg = data?.detail || data?.message || `HTTP ${res.status}`;
-    if (typeof errorMsg === 'string' && errorMsg.includes('Not authenticated')) {
-      return {}; 
+    if(res.status === 401){
+      localStorage.removeItem("freshmate_token");
+      localStorage.removeItem("freshmate_user");
+      checkAuth();
+      throw new Error("連線逾期，請重新登入");
     }
+    const errorMsg = data?.detail || data?.message || `HTTP ${res.status}`;
     throw new Error(errorMsg);
   }
   return data;
 }
 
 function toast(msg){
-  if (msg && typeof msg === 'string' && msg.includes('Not authenticated')) return;
   const t=$("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200)
 }
 
@@ -300,7 +365,8 @@ async function recognizePhoto(){
  $("recognizeResult").innerHTML=`<div class="notice">AI 辨識完成。請確認結果後手動加入庫存。</div><pre style="white-space:pre-wrap;background:#f5f7f2;padding:14px;border-radius:10px;font-size:12px">${esc(JSON.stringify(d,null,2))}</pre>`}
  catch(e){$("recognizeResult").innerHTML=`<div class="notice">辨識失敗：${esc(e.message)}。請確認已設定 ANTHROPIC_API_KEY。</div>`}
 }
-loadAll();
+
+checkAuth();
 </script>
 </body>
 </html>
