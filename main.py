@@ -12,10 +12,10 @@ from jose import JWTError, jwt
 from data import FOODS, DEFAULT_FOOD, STORAGE_IDX, RECIPES
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./freshmate.db")
-MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")  # 修正為更穩定正確的預設模型名稱
+MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")  
 SECRET_KEY = os.getenv("SECRET_KEY", "your-super-secret-key-change-it")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 預設7天
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7天
 
 TREE_KG = 12  
 URGENT_DAYS = 3
@@ -57,7 +57,6 @@ class Event(Base):
 Base.metadata.create_all(engine)
 app = FastAPI(title="FreshMate API", version="2.0")
 
-# 完整設定 CORS，允許所有來源（包含 GitHub Pages 與本地端）的跨域請求與憑證
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -73,7 +72,6 @@ def db():
     finally:
         s.close()
 
-# 驗證使用者身分 (JWT)
 def get_current_user(token: str = Depends(oauth2_scheme), s: Session = Depends(db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
