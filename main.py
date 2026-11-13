@@ -1,4 +1,4 @@
-import base64, json, os
+import json, os
 from datetime import date, timedelta, datetime
 from typing import Optional
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, status
@@ -12,7 +12,7 @@ from jose import JWTError, jwt
 from data import FOODS, DEFAULT_FOOD, STORAGE_IDX, RECIPES
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./freshmate.db")
-MODEL = os.getenv("CLAUDE_MODEL", "claude-3-5-sonnet-20241022")  # 修正為更穩定正確的預設模型名稱
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")  # 免費層可用；額度不夠可改 gemini-2.5-flash-lite
 SECRET_KEY = os.getenv("SECRET_KEY", "your-super-secret-key-change-it")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 預設7天
@@ -173,11 +173,16 @@ def consume(s, u, name, grams, wasted):
 
 @app.post("/items/{item_id}/use")
 def use_item(item_id: int, wasted: bool = False, u=Depends(get_current_user), s: Session = Depends(db)):
+    """把「這一筆」食材標記為已使用（用完）；wasted=true 則記為浪費。"""
     i = s.query(Item).filter_by(id=item_id, user_id=u).first()
     if not i:
         raise HTTPException(404, "找不到這項食材")
-    consume(s, u, i.name, i.grams, wasted); s.commit()
-    return {"ok": True}
+    kind = "wasted" if wasted else ("saved" if days_left(i) <= URGENT_DAYS else "eaten")
+    s.add(Event(user_id=u, kind=kind, name=i.name, grams=i.grams,
+                ntd=ntd_of(i.name, i.grams), co2=co2_of(i.name, i.grams)))
+    s.delete(i)
+    s.commit()
+    return {"ok": True, "kind": kind}
 
 @app.delete("/items/{item_id}")
 def delete_item(item_id: int, u=Depends(get_current_user), s: Session = Depends(db)):
@@ -238,33 +243,51 @@ PROMPT = ("這是一張冰箱或購物的照片。請辨識可見的食材，只
           '每個元素格式：{"name": 食材中文名, "grams": 估計克數, "storage": "冷藏"|"常溫"|"冷凍", "confidence": 0 到 1}。'
           "名稱請優先使用這些：" + "、".join(FOODS) + "。看不清楚的不要猜。")
 
+MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10 MB
+
 @app.post("/recognize")
 async def recognize(file: UploadFile = File(...), u=Depends(get_current_user)):
-    import anthropic
-    api_key = os.getenv("ANTHROPIC_API_KEY")
+    from google import genai
+    from google.genai import types, errors
+
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
-        raise HTTPException(500, "伺服器未設定 ANTHROPIC_API_KEY")
-    
+        raise HTTPException(500, "伺服器未設定 GEMINI_API_KEY")
+
     if file.content_type not in ("image/jpeg", "image/png", "image/webp"):
         raise HTTPException(415, "只支援 jpeg / png / webp 格式的圖片")
-        
+
+    contents = await file.read()
+    if len(contents) > MAX_IMAGE_BYTES:
+        raise HTTPException(413, "圖片太大，請壓縮到 10 MB 以下")
+
     try:
-        contents = await file.read()
-        data = base64.b64encode(contents).decode("utf-8")
-        
-        client = anthropic.Anthropic(api_key=api_key)
-        msg = client.messages.create(
-            model=MODEL, max_tokens=1000,
-            messages=[{"role": "user", "content": [
-                {"type": "image", "source": {"type": "base64", "media_type": file.content_type, "data": data}},
-                {"type": "text", "text": PROMPT}]}])
-        
-        text = "".join(b.text for b in msg.content if b.type == "text").replace("```json", "").replace("```", "").strip()
+        client = genai.Client(api_key=api_key)
+        resp = await client.aio.models.generate_content(
+            model=MODEL,
+            contents=[types.Part.from_bytes(data=contents, mime_type=file.content_type), PROMPT],
+            config=types.GenerateContentConfig(response_mime_type="application/json", temperature=0.2),
+        )
+        text = (resp.text or "").replace("```json", "").replace("```", "").strip()
         found = json.loads(text)
+        if isinstance(found, dict):  # 偶爾模型會包成 {"items": [...]}
+            found = next((v for v in found.values() if isinstance(v, list)), [])
+        if not isinstance(found, list):
+            raise ValueError("AI 回傳格式不是陣列")
+    except errors.APIError as e:
+        if e.code == 429:
+            raise HTTPException(429, "今天的免費辨識額度用完了，請稍後再試，或改用 gemini-2.5-flash-lite")
+        raise HTTPException(502, f"辨識失敗：{e.message}")
     except Exception as e:
         raise HTTPException(502, f"辨識失敗：{str(e)}")
-        
+
     today = date.today()
+    result = []
     for f in found:
-        f["suggested_expires"] = expiry(f.get("name", ""), f.get("storage", "冷藏"), today) if f.get("storage") in STORAGE_IDX else None
-    return found
+        if not isinstance(f, dict):
+            continue
+        storage = f.get("storage") if f.get("storage") in STORAGE_IDX else "冷藏"
+        f["storage"] = storage
+        f["suggested_expires"] = expiry(f.get("name", ""), storage, today)
+        result.append(f)
+    return result
