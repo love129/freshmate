@@ -12,7 +12,7 @@ from jose import JWTError, jwt
 from data import FOODS, DEFAULT_FOOD, STORAGE_IDX, RECIPES
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./freshmate.db")
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")  # 免費層可用；額度不夠可改 gemini-2.5-flash-lite
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")  # 可用環境變數 GEMINI_MODEL 覆蓋；舊模型被淘汰時改這裡
 SECRET_KEY = os.getenv("SECRET_KEY", "your-super-secret-key-change-it")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 預設7天
@@ -266,7 +266,7 @@ async def recognize(file: UploadFile = File(...), u=Depends(get_current_user)):
         resp = await client.aio.models.generate_content(
             model=MODEL,
             contents=[types.Part.from_bytes(data=contents, mime_type=file.content_type), PROMPT],
-            config=types.GenerateContentConfig(response_mime_type="application/json", temperature=0.2),
+            config=types.GenerateContentConfig(response_mime_type="application/json"),
         )
         text = (resp.text or "").replace("```json", "").replace("```", "").strip()
         found = json.loads(text)
@@ -276,7 +276,7 @@ async def recognize(file: UploadFile = File(...), u=Depends(get_current_user)):
             raise ValueError("AI 回傳格式不是陣列")
     except errors.APIError as e:
         if e.code == 429:
-            raise HTTPException(429, "今天的免費辨識額度用完了，請稍後再試，或改用 gemini-2.5-flash-lite")
+            raise HTTPException(429, "免費辨識額度暫時用完了，請稍後再試")
         raise HTTPException(502, f"辨識失敗：{e.message}")
     except Exception as e:
         raise HTTPException(502, f"辨識失敗：{str(e)}")
