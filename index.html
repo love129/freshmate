@@ -421,7 +421,7 @@ async function recognizePhoto(){
  const fd=new FormData();fd.append("file",f);
  try{const d=await api("/recognize",{method:"POST",body:fd});
  $("recognizeResult").innerHTML=`<div class="notice">AI 辨識完成。請確認結果後手動加入庫存。</div><pre style="white-space:pre-wrap;background:#f5f7f2;padding:14px;border-radius:10px;font-size:12px">${esc(JSON.stringify(d,null,2))}</pre>`}
- catch(e){$("recognizeResult").innerHTML=`<div class="notice">辨識失敗：${esc(e.message)}。請確認後端已設定 GEMINI_API_KEY。</div>`}
+ catch(e){$("recognizeResult").innerHTML=`<div class="notice">${esc(String(e.message).startsWith("辨識失敗")?e.message:"辨識失敗："+e.message)}</div>`}
 }
 
 checkAuth();

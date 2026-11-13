@@ -1,4 +1,4 @@
-import json, os
+import asyncio, json, os
 from datetime import date, timedelta, datetime
 from typing import Optional
 from fastapi import FastAPI, Depends, HTTPException, UploadFile, File, status
@@ -13,6 +13,7 @@ from data import FOODS, DEFAULT_FOOD, STORAGE_IDX, RECIPES
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./freshmate.db")
 MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")  # 可用環境變數 GEMINI_MODEL 覆蓋；舊模型被淘汰時改這裡
+FALLBACK_MODELS = os.getenv("GEMINI_FALLBACK_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite")  # 主模型忙線時依序備援
 SECRET_KEY = os.getenv("SECRET_KEY", "your-super-secret-key-change-it")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 預設7天
@@ -261,25 +262,40 @@ async def recognize(file: UploadFile = File(...), u=Depends(get_current_user)):
     if len(contents) > MAX_IMAGE_BYTES:
         raise HTTPException(413, "圖片太大，請壓縮到 10 MB 以下")
 
-    try:
-        client = genai.Client(api_key=api_key)
-        resp = await client.aio.models.generate_content(
-            model=MODEL,
-            contents=[types.Part.from_bytes(data=contents, mime_type=file.content_type), PROMPT],
-            config=types.GenerateContentConfig(response_mime_type="application/json"),
-        )
-        text = (resp.text or "").replace("```json", "").replace("```", "").strip()
-        found = json.loads(text)
-        if isinstance(found, dict):  # 偶爾模型會包成 {"items": [...]}
-            found = next((v for v in found.values() if isinstance(v, list)), [])
-        if not isinstance(found, list):
-            raise ValueError("AI 回傳格式不是陣列")
-    except errors.APIError as e:
-        if e.code == 429:
+    client = genai.Client(api_key=api_key)
+    part = types.Part.from_bytes(data=contents, mime_type=file.content_type)
+    cfg = types.GenerateContentConfig(response_mime_type="application/json")
+    models = [MODEL] + [m.strip() for m in FALLBACK_MODELS.split(",") if m.strip()]
+    found, last_err = None, None
+
+    # 主要模型忙線（503）、額度滿（429）或找不到（404）時，自動換下一個模型
+    for m in models:
+        try:
+            resp = await client.aio.models.generate_content(model=m, contents=[part, PROMPT], config=cfg)
+            text = (resp.text or "").replace("```json", "").replace("```", "").strip()
+            found = json.loads(text)
+            if isinstance(found, dict):  # 偶爾模型會包成 {"items": [...]}
+                found = next((v for v in found.values() if isinstance(v, list)), [])
+            if not isinstance(found, list):
+                raise ValueError("AI 回傳格式不是陣列")
+            break
+        except errors.APIError as e:
+            last_err = e
+            if e.code in (404, 429, 500, 503, 504):
+                await asyncio.sleep(1)
+                continue
+            raise HTTPException(502, f"辨識失敗：{e.message}")
+        except Exception as e:  # JSON 解析失敗等，換模型再試
+            last_err = e
+            continue
+
+    if found is None:
+        code = getattr(last_err, "code", None)
+        if code == 429:
             raise HTTPException(429, "免費辨識額度暫時用完了，請稍後再試")
-        raise HTTPException(502, f"辨識失敗：{e.message}")
-    except Exception as e:
-        raise HTTPException(502, f"辨識失敗：{str(e)}")
+        if code in (500, 503, 504):
+            raise HTTPException(503, "AI 服務目前很忙，請過一分鐘再按一次辨識")
+        raise HTTPException(502, f"辨識失敗：{getattr(last_err, 'message', None) or str(last_err)}")
 
     today = date.today()
     result = []
